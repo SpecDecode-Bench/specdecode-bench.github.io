@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{ page.title }} | {{ site.title }}</title>
+  <meta name="author" content="{{ site.title }}">
+  <meta name="description" content="{{ page.description }}">
+  <meta name="keywords" content="{{ page.keywords | default: 'speculative-decoding, llm-inference, vllm, benchmark' }}">
+
+  <!-- Bootstrap & MDB -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha256-DF7Zhf293AJxJNTmh5zhoYYIMs2oXitRfBjY+9L//AY=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css"
+        integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css"
+        integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css"
+        integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
+
+  <!-- Fonts -->
+  <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media=""
+        id="highlight_theme_light">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20fill='%23003262'%20rx='4'/%3E%3Ctext%20x='16'%20y='22'%20font-family='Georgia,%20serif'%20font-size='20'%20font-weight='bold'%20fill='white'%20text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+
+  <!-- Site CSS -->
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+
+  <!-- jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
+          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <!-- MathJax -->
+  <script type="text/javascript">window.MathJax = { tex: { tags: "ams" } };</script>
+  <script defer type="text/javascript" id="MathJax-script"
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
+
+  <!-- Distill -->
+  <script src="{{ '/assets/js/distillpub/template.v2.js' | relative_url }}"></script>
+  <script src="{{ '/assets/js/distillpub/transforms.v2.js' | relative_url }}"></script>
+  <script src="{{ '/assets/js/distillpub/overrides.js' | relative_url }}"></script>
+
+  <style type="text/css">
+    d-article img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.5rem auto;
+      border-radius: 6px;
+    }
+    d-article p img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+
+  {% if page.extra_css %}
+  <style type="text/css">{{ page.extra_css }}</style>
+  {% endif %}
+</head>
+
+<body>
+
+<d-front-matter>
+  <script async type="text/json">{{ page.distill_front_matter }}</script>
+</d-front-matter>
+
+<header>
+  <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top">
+    <div class="container">
+      <a class="navbar-brand title font-weight-lighter" href="{{ '/' | relative_url }}">
+        {{ site.title }} blog
+      </a>
+      <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse"
+              data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar top-bar"></span>
+        <span class="icon-bar middle-bar"></span>
+        <span class="icon-bar bottom-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse text-right" id="navbarNav">
+        <ul class="navbar-nav ml-auto flex-nowrap"></ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="post distill">
+
+<d-title>
+  <h1>{{ page.title }}</h1>
+  <p>{{ page.subtitle }}</p>
+</d-title>
+
+<d-byline></d-byline>
+
+<d-article>
+
+{{ content }}
+
+</d-article>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha256-fgLAgv7fyCGopR/gBNq2iW3ZKIdqIcyshnUULC4vex8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js"
+        integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script>
+</body>
+</html>

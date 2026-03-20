@@ -1,0 +1,22 @@
+title: SpecDecode-Bench
+description: >-
+  Systematic benchmarking of speculative decoding on production-grade LLM inference engines.
+url: "https://specdecode-bench.github.io"
+baseurl: ""
+repository: "specdecode-bench/specdecode-bench.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /:title/
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
