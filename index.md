@@ -3,7 +3,7 @@ layout: post
 title: "Speculative Decoding: Performance or Illusion?"
 date: 2025-12-30
 last_updated: 2026-03-20
-description: "A systematic study of speculative decoding on a production-grade inference engine (vLLM), covering multiple SD variants across diverse workloads, model scales, and batch sizes."
+description: "The first systematic study of speculative decoding on a production-grade inference engine (vLLM), covering multiple SD variants across diverse workloads, model scales, and batch sizes."
 authors: ["Xiaoxuan Liu*", "Jiaxiang Yu*", "Jongseok Park", "Ion Stoica", "Alvin Cheung"]
 tags: [llm, inference, systems, vllm, speculative-decoding]
 ---
@@ -29,16 +29,17 @@ tags: [llm, inference, systems, vllm, speculative-decoding]
 
 <div class="highlight-box">
 <p>
-Speculative decoding (SD) is widely used to speed up LLM inference, but how well does it <em>actually</em> work in production? We benchmarked <strong>five SD variants</strong>&mdash;n-gram, EAGLE, EAGLE-3, Draft-Model, and Multi-Token Prediction (MTP)&mdash;on <strong>vLLM</strong>, covering four models (Llama-3.1-8B, Llama-3-70B, Qwen3-8B, GLM-4.5-Air-106B), six diverse workloads, and batch sizes from 1 to 128 (up to 512 for profiling). All experiments use NVIDIA H100 GPUs. We measure <strong>token throughput</strong> (generated tokens per second) as our primary metric.
+Speculative decoding (SD) is widely used to speed up LLM inference, but how well does it <em>actually</em> work in production? We presented, to our best knowledge, the first systematic evaluation of speculative decoding on a production-grade, widely deployed inference engine vLLM. Herein, we benchmarked <strong>five SD variants</strong>&mdash;n-gram, EAGLE, EAGLE-3, Draft-Model, and Multi-Token Prediction (MTP)&mdash;on <strong>vLLM</strong>, covering four models (Llama-3.1-8B, Llama-3-70B, Qwen3-8B, GLM-4.5-Air-106B), six diverse workloads, and batch sizes from 1 to 128 (up to 512 for profiling). All experiments use NVIDIA H100 GPUs. We measure <strong>token throughput</strong> (generated tokens per second) as our primary metric.
 </p>
 </div>
 
 Here is what we found:
 
-- **SD consistently improves throughput**, but speedups shrink as batch size grows (the system becomes compute-bound).
-- **Verification dominates execution time** (42--95%), making rejected tokens expensive.
+- **SD works in production**, but speedups shrink as batch size grows (the system becomes compute-bound). Also, expect a lower speedup in realistic batch settings, not the 3x-4x numbers often cited at batch size 1.
+- **Verification is the bottleneck and dominates execution time** (42--95%). Reducing wasted verification on rejected tokens is the most promising avenue for improvement.
+- **No single method wins everywhere.** EAGLE-3 is the best all-around choice. Draft-model methods excel when the target model is large. n-gram is optimal for code editing and high-overlap tasks.
 - **Acceptance behavior varies wildly**---across token positions, requests, and datasets---with each SD variant showing distinct patterns.
-- **Oracle analysis reveals a large gap** between current speedups and the theoretical upper bound, pointing to untapped room for improvement.
+- **Oracle analysis reveals a large gap** between current speedups and the theoretical upper bound, pointing to untapped room for future research.
 - **Adaptively combining n-gram and EAGLE** can push the theoretical speedup to **4.9x** on code-editing workloads (InstructCoder).
 
 ## Why This Study?
@@ -48,11 +49,11 @@ Speculative decoding has become one of the most popular techniques for accelerat
 
 Despite its popularity, prior evaluations have critical shortcomings:
 
-- They use **research prototypes**, not production-grade systems, which lack key optimizations like CUDA graph and continuous batching.
+- They use **research prototypes**, not production-grade systems, which lack key optimizations like CUDA graphs and continuous batching.
 - They test at **batch size 1**---an unrealistic setting that inflates speedup numbers.
 - They provide **no systematic comparison** across SD variants, leaving practitioners without guidance on which method to use.
 
-We address all of these gaps in this study.
+We address all of these gaps. Our study is, to our knowledge, the **first systematic evaluation of speculative decoding on a production-grade, widely deployed inference engine** (vLLM v0.10.1/v0.11.1), with realistic batch sizes and diverse real-world workloads.
 
 ## End-to-End Performance
 {: #end-to-end-performance}
