@@ -120,6 +120,11 @@ SD's memory overhead is minimal. n-gram adds zero GPU memory. EAGLE/EAGLE-3 adds
 ## Acceptance Behavior: Not All Tokens Are Equal
 {: #acceptance-behavior}
 
+![Figure 5: Acceptance heatmap](assets/img/fig5.png)
+{: style="text-align: center;"}
+
+<p class="figure-caption"><strong>Figure 5.</strong> Generation length per token position for Llama3.1-8B. Requests are sorted based on generation length. Darker colors indicate that more tokens are generated at the corresponding position.</p>
+
 Acceptance rate is commonly reported as a single number, but this masks crucial variability. We analyze acceptance at three levels of granularity.
 
 **Within a request:** Acceptance length varies significantly across token positions. For reasoning workloads, both n-gram and EAGLE-3 accept more tokens as generation progresses (the model accumulates repetitive patterns). But n-gram's acceptance drops near the end of generation, when the model shifts from step-by-step reasoning to writing a final answer.
@@ -159,7 +164,14 @@ The results reveal a **substantial gap** between current methods and the oracle.
 ## Combining Methods: Approaching the Upper Bound
 {: #combining-methods}
 
-Different SD methods are complementary. As shown in the per-position analysis, EAGLE and n-gram each outperform the other at different token positions within the same request.
+![Figure 11: Acceptance diff heatmap](assets/img/fig11.png)
+{: style="text-align: center;"}
+
+<p class="figure-caption"><strong>Figure 11.</strong> Per-position accepted-length difference between n-gram and EAGLE on Llama 3.1-8B. Red indicates positions where EAGLE
+accepts longer spans, while blue indicates positions favoring n-gram. The figure illustrates that different speculative decoding methods
+exhibit distinct acceptance behaviors across decoding positions.</p>
+
+Different SD methods are complementary. As shown in the per-position analysis, EAGLE/EAGLE-3 and n-gram each outperform the other at different token positions within the same request.
 
 ![Figure 12: Combining SD methods](assets/img/fig12.png)
 {: style="text-align: center;"}
@@ -181,7 +193,8 @@ This points to a **promising research direction**: developing a lightweight pred
 2. **Verification is the bottleneck**. Reducing wasted verification on rejected tokens is the most promising avenue for improvement.
 3. **No single method wins everywhere.** EAGLE-3 is the best all-around choice. Draft-model methods excel when the target model is large. n-gram is optimal for code editing and high-overlap tasks.
 4. **Chain > tree** for most practical batch sizes.
-5. **There is substantial room for improvement.** The gap between current methods and the oracle, combined with the complementarity between methods, suggests that adaptive SD could push speedups significantly higher.
+5. **Acceptance behavior varies wildly**---across token positions, requests, and datasets---with each SD variant showing distinct patterns.
+6. **There is substantial room for future research.** The gap between current methods and the oracle, combined with the complementarity between methods, suggests that adaptive SD could push speedups significantly higher.
 
 ## Paper & Code
 {: #links}
