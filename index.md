@@ -184,7 +184,7 @@ Different SD methods are complementary. As shown in the per-position analysis, E
 ![Figure 12: Combining SD methods](assets/img/fig12.png)
 {: style="text-align: center;"}
 
-<p class="figure-caption"><strong>Figure 12.</strong> Top row: Per-position accepted-length difference between n-gram and EAGLE on Llama-3.1-8B. Red = EAGLE accepts more tokens; blue = n-gram accepts more. The alternating red/blue pattern shows they are complementary. Bottom row: Speedup when adaptively combining methods (Oracle Combine, dashed green) vs. using each method alone.</p>
+<p class="figure-caption"><strong>Figure 12.</strong> Combining different SD methods for optimal speedup on Llama3.1-8B. Each subplot compares Oracle Combine (adaptively selecting the best method per position) against single-method oracles (n-gram alone, EAGLE alone) and fixed-k configurations (k=1, k=3, k=5). The gap between Oracle Combine and the best single method shows the headroom from adaptive selection.</p>
 
 We simulate an **Oracle Combine** strategy: at each position, pick whichever method (EAGLE or n-gram) yields the longer accepted span, and propose exactly that many tokens. This represents the theoretical upper bound of an adaptive approach.
 
