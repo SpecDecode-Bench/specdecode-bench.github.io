@@ -129,7 +129,17 @@ Acceptance rate is commonly reported as a single number, but this masks crucial 
 
 **Within a request:** Acceptance length varies significantly across token positions. For reasoning workloads, both n-gram and EAGLE-3 accept more tokens as generation progresses (the model accumulates repetitive patterns). But n-gram's acceptance drops near the end of generation, when the model shifts from step-by-step reasoning to writing a final answer.
 
-**Across requests:** Even on the same dataset, per-request acceptance varies dramatically. On InstructCoder with Llama-3-70B, EAGLE produces per-step accepted spans of 2.7--7.4 tokens (5th--95th percentile), while n-gram ranges from 1.1--15.0 and draft-model from 5.6--18.3. EAGLE is consistent; n-gram is bursty.
+![Figure 6: Per-position acceptance length](assets/img/fig6.png)
+{: style="text-align: center;"}
+
+<p class="figure-caption"><strong>Figure 6.</strong> Average generation length per token position for EAGLE-3 and n-gram on Qwen3-8B-Thinking (AIME), grouped by total generation length. Both methods accept more tokens as generation progresses, but n-gram's acceptance drops near the end.</p>
+
+**Across requests:** Even on the same dataset, per-request acceptance varies dramatically. On InstructCoder with Llama-3-70B, EAGLE produces per-step accepted spans of 2.7--7.4 tokens, while n-gram ranges from 1.1--15.0 and draft-model from 5.6--18.3. EAGLE is consistent; n-gram is bursty.
+
+![Figure 7: Request-level acceptance distributions](assets/img/fig7.png)
+{: style="text-align: center;"}
+
+<p class="figure-caption"><strong>Figure 7.</strong> Distribution of per-request average generation length across models and datasets. Box plots show the variability in acceptance behavior: n-gram and draft-model exhibit wide spreads, while EAGLE/EAGLE-3 are more consistent.</p>
 
 **Across datasets:** Each SD variant has its niche. Draft-model methods achieve the longest median generation lengths. EAGLE is the most stable. n-gram has heavy-tailed distributions---most requests are short, but occasional long bursts in repetitive code yield high payoffs.
 
@@ -167,9 +177,7 @@ The results reveal a **substantial gap** between current methods and the oracle.
 ![Figure 11: Acceptance diff heatmap](assets/img/fig11.png)
 {: style="text-align: center;"}
 
-<p class="figure-caption"><strong>Figure 11.</strong> Per-position accepted-length difference between n-gram and EAGLE on Llama 3.1-8B. Red indicates positions where EAGLE
-accepts longer spans, while blue indicates positions favoring n-gram. The figure illustrates that different speculative decoding methods
-exhibit distinct acceptance behaviors across decoding positions.</p>
+<p class="figure-caption"><strong>Figure 11.</strong> Per-position accepted-length difference between n-gram and EAGLE on Llama 3.1-8B. Red indicates positions where EAGLE accepts longer spans, while blue indicates positions favoring n-gram. The figure illustrates that different speculative decoding methods exhibit distinct acceptance behaviors across decoding positions.</p>
 
 Different SD methods are complementary. As shown in the per-position analysis, EAGLE/EAGLE-3 and n-gram each outperform the other at different token positions within the same request.
 
