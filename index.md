@@ -207,7 +207,7 @@ This points to a **promising research direction**: developing a lightweight pred
 ## Acknowledgments
 {: #acknowledgments}
 
-We thank Tomas Ruiz for implementing draftmodel-based speculative decoding in vLLM, which allowed us to profile and compare this approach. We also thank members of the Sky Computing Lab for their helpful discussions. We also thank Benjamin Chislett and many others for their valuable feedback and assistance to make this work better. Please see the [acknowledgments section](https://arxiv.org/abs/2601.11580) in the paper for more details.
+We thank Tomas Ruiz for implementing draft-model-based speculative decoding in vLLM, which allowed us to profile and compare this approach. We also thank members of the Sky Computing Lab for their helpful discussions. We also thank Benjamin Chislett and many others for their valuable feedback and assistance to make this work better. Please see the [acknowledgments section](https://arxiv.org/abs/2601.11580) in the paper for more details.
 
 ## Paper & Code
 {: #links}
@@ -228,3 +228,5 @@ If you find this work useful, please consider citing our paper:
       url={https://arxiv.org/abs/2601.11580},
 }
 ```
+
+Last updated: 2026-04-02
