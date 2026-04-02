@@ -2,7 +2,7 @@
 layout: post
 title: "Speculative Decoding: Performance or Illusion?"
 date: 2025-12-30
-last_updated: 2026-03-20
+last_updated: 2026-04-02
 description: "The first systematic study of speculative decoding on a production-grade inference engine (vLLM), covering multiple SD variants across diverse workloads, model scales, and batch sizes."
 authors: ["Xiaoxuan Liu*", "Jiaxiang Yu*", "Jongseok Park", "Ion Stoica", "Alvin Cheung"]
 tags: [llm, inference, systems, vllm, speculative-decoding]
@@ -95,7 +95,7 @@ We compare tree-style verification (wider speculation trees) against chain-style
 
 Reasoning workloads (short prompts, very long outputs) are increasingly prevalent. We find that **SD speedups on reasoning tasks are comparable to standard tasks**. For Qwen3-8B-Thinking, EAGLE-3 achieves 1.64--1.80x speedup on GPQA-Main and AIME22--24, while n-gram reaches 1.50--1.58x thanks to repetitive symbolic patterns in chain-of-thought reasoning.
 
-For MTP (tested on GLM-4.5-Air-106B), speedup reaches 1.3--1.8x, but is limited because the released model includes only a single MTP head. Its position-wise acceptance rate degrades sharply across the three speculated positions (0.92 → 0.68 → 0.38 on GPQA-Main), constraining overall gains.
+For MTP (tested on GLM-4.5-Air-106B), speedup reaches 1.3--1.8x, but is less representative than MTP's full potential. We hypothesis that this is because the current MTP head is not fully optimized for autoregressively drafting tokens. Its position-wise acceptance rate degrades sharply across the three drafted tokens, constraining overall gains.
 
 ## Where Does the Time Go?
 {: #where-does-the-time-go}
@@ -203,6 +203,11 @@ This points to a **promising research direction**: developing a lightweight pred
 4. **Chain > tree** for most practical batch sizes.
 5. **Acceptance behavior varies wildly**---across token positions, requests, and datasets---with each SD variant showing distinct patterns.
 6. **There is substantial room for future research.** The gap between current methods and the oracle, combined with the complementarity between methods, suggests that adaptive SD could push speedups significantly higher.
+
+## Acknowledgments
+{: #acknowledgments}
+
+We thank Tomas Ruiz for implementing draftmodel-based speculative decoding in vLLM, which allowed us to profile and compare this approach. We also thank members of the Sky Computing Lab for their helpful discussions. We also thank Benjamin Chislett and many others for their valuable feedback and assistance to make this work better. Please see the [acknowledgments section](https://arxiv.org/abs/2601.11580) in the paper for more details.
 
 ## Paper & Code
 {: #links}
